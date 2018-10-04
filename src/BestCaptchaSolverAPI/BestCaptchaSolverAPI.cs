@@ -89,20 +89,26 @@ namespace bestcaptchasolver
         /// </summary>
         /// <param name="captchaid"></param>
         /// <returns></returns>
-        public string retrieve(string captchaid)
+        public Dictionary<string, string> retrieve(string captchaid)
         {
             var url = string.Format("{0}/captcha/{1}?access_token={2}", BASE_URL, captchaid, this._access_token);
             string resp = Utils.GET(url, USER_AGENT, TIMEOUT);
-            dynamic d = JObject.Parse(resp);
-            if (d.status == "pending") return null;
-            try
+            JObject d = JObject.Parse(resp);
+            // check if still in pending
+            if (d.GetValue("status").ToString() == "pending")
             {
-                return d.gresponse.ToString();
+                var dd = new Dictionary<string, string>();
+                dd.Add("gresponse", "");
+                dd.Add("text", "");
+                return dd;
             }
-            catch
+            // we're good, create dict and return
+            var dict = new Dictionary<string, string>();
+            foreach(var e in d)
             {
-                return d.text.ToString();
+                dict.Add(e.Key, e.Value.ToString());   
             }
+            return dict;
         }
 
         /// <summary>

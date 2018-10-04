@@ -47,10 +47,10 @@ var id = bcs.submit_image_captcha("captcha.jpg", true);
 Once you have the captchaID, you can check for it's completion
 ```
 var id = bcs.submit_image_captcha("captcha.jpg");  // submit it and get id
-string image_text = null;
-while(image_text == null)
+string image_text = "";
+while(image_text == "")
 {
-    image_text = bcs.retrieve(id);
+    image_text = bcs.retrieve(id)["text"];
     Thread.Sleep(2000);
 }
 ```
@@ -71,12 +71,18 @@ Same as before, this returns an ID which is used to regulary check for completio
 
 ```csharp
 id = bcs.submit_recaptcha(page_url, site_key);
-string gresponse = null;
-while (gresponse == null)
+string gresponse = "";
+while (gresponse == "")
 {
-     gresponse = bcs.retrieve(id);
+     gresponse = bcs.retrieve(id)["gresponse"];
      Thread.Sleep(5000);
 }
+```
+
+## If submitted with proxy, get proxy status
+
+```
+var proxy_status = bcs.retrieve(id)["proxy_status"];
 ```
 
 ## Set captcha bad

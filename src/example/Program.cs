@@ -29,10 +29,10 @@ namespace example
             // solve image (classic) captcha
             Console.WriteLine("Solving image captcha ...");
             var id = bcs.submit_image_captcha("captcha.jpg");
-            string image_text = null;
-            while(image_text == null)
+            string image_text = "";
+            while(image_text == "")
             {
-                image_text = bcs.retrieve(id);
+                image_text = bcs.retrieve(id)["text"];
                 Thread.Sleep(2000);
             }
             Console.WriteLine(string.Format("Captcha text: {0}", image_text));
@@ -40,13 +40,14 @@ namespace example
             // solve recaptcha
             Console.WriteLine("Solving recaptcha ...");
             id = bcs.submit_recaptcha(page_url, site_key);
-            string gresponse = null;
-            while (gresponse == null)
+            string gresponse = "";
+            while (gresponse == "")
             {
-                gresponse = bcs.retrieve(id);
+                gresponse = bcs.retrieve(id)["gresponse"];
                 Thread.Sleep(5000);
             }
             Console.WriteLine(string.Format("Gresponse: {0}", gresponse));
+            //var proxy_status = bcs.retrieve(id)["proxy_status"];
 
             // bcs.submit_image_captcha("captcha.jpg", true);      // case sensitive
             // bcs.submit_recaptcha(page_url, site_key, "127.0.0.1:8080");     // HTTP proxy
