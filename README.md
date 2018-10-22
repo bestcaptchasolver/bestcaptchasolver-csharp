@@ -35,17 +35,19 @@ Console.WriteLine(string.Format("Balance: {0}", balance));
 ## Submit image captcha
 
 ``` csharp
-var id = bcs.submit_image_captcha("captcha.jpg");
+var d = new Dictionary<string, string>();
+d.Add("image", "captcha.jpg");
+var id = bcs.submit_image_captcha(d);
 ```
-Takes a 2nd argument, **case_sensitive** which is a bool
-``` csharp
-var id = bcs.submit_image_captcha("captcha.jpg", true);
-```
+
+#### Optional parameters
+- case_sensitive - can be a string with value `true` or `false`
+- affiliate_id - ID of affiliate
 
 ## Retrieve image captcha text
 
 Once you have the captchaID, you can check for it's completion
-```
+``` csharp
 var id = bcs.submit_image_captcha("captcha.jpg");  // submit it and get id
 string image_text = "";
 while(image_text == "")
@@ -60,10 +62,20 @@ while(image_text == "")
 For recaptcha submission there are two things that are required.
 - page_url
 - site_key
-- proxy (optional), works in this format `12.34.56.78:1234` or `user:password@12.34.56.78:1234`
+- type (optional)
+- v3_action (optional)
+- v3_min_score (optional)
+- user_agent (optional)
+- affiliate_id (optional)
+- proxy (optional)
+
+For more details about the parameters check [/api](https://bestcaptchasolver.com/api) page
 
 ``` csharp
-id = bcs.submit_recaptcha(page_url, site_key);
+var rd = new Dictionary<string, string>();
+rd.Add("page_url", page_url);
+rd.Add("site_key", site_key);
+var id = bcs.submit_recaptcha(rd);
 ```
 Same as before, this returns an ID which is used to regulary check for completion
 
@@ -81,7 +93,7 @@ while (gresponse == "")
 
 ## If submitted with proxy, get proxy status
 
-```
+``` csharp
 var proxy_status = bcs.retrieve(id)["proxy_status"];
 ```
 

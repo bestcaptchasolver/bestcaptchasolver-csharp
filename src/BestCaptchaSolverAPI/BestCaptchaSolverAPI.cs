@@ -43,18 +43,25 @@ namespace bestcaptchasolver
         /// <summary>
         /// Submit image captcha
         /// </summary>
-        /// <param name="image"></param>
-        /// <param name="case_sensitive"></param>
+        /// <param name="opts"></param>
         /// <returns>captchaID</returns>
-        public string submit_image_captcha(string image, bool case_sensitive = false)
+        public string submit_image_captcha(Dictionary<string, string> opts)
         {
             Dictionary<string, string> dict = new Dictionary<string, string>();
             var url = string.Format("{0}/captcha/image", BASE_URL);
             dict.Add("access_token", this._access_token);
+            var image = "";
             // if no b64 string was given, but image path instead
-            if (File.Exists(image)) image = Utils.read_captcha_image(image);
+            if (File.Exists(opts["image"])) image = Utils.read_captcha_image(opts["image"]);
+            else image = opts["image"];
             dict.Add("b64image", image);
-            if (case_sensitive) dict.Add("case_sensitive", "1");
+            // check case sensitive
+            if (opts.ContainsKey("case_sensitive"))
+            {
+                if (opts["case_sensitive"].Equals("true")) dict.Add("case_sensitive", "1");
+            }
+            // affiliate ID
+            if (opts.ContainsKey("affiliate_id")) dict.Add("affiliate_id", opts["affiliate_id"]);
             var data = JsonConvert.SerializeObject(dict);
             var resp = Utils.POST(url, data, USER_AGENT, TIMEOUT);
             dynamic d = JObject.Parse(resp);
@@ -63,21 +70,28 @@ namespace bestcaptchasolver
         /// <summary>
         /// Submit image captcha
         /// </summary>
-        /// <param name="image"></param>
-        /// <param name="case_sensitive"></param>
+        /// <param name="opts"></param>
         /// <returns>captchaID</returns>
-        public string submit_recaptcha(string page_url, string site_key, string proxy = "")
+        public string submit_recaptcha(Dictionary<string, string> opts)
         {
             Dictionary<string, string> dict = new Dictionary<string, string>();
             var url = string.Format("{0}/captcha/recaptcha", BASE_URL);
             dict.Add("access_token", this._access_token);
-            dict.Add("page_url", page_url);
-            dict.Add("site_key", site_key);
-            if(!string.IsNullOrWhiteSpace(proxy))
+            dict.Add("page_url", opts["page_url"]);
+            dict.Add("site_key", opts["site_key"]);
+            if(opts.ContainsKey("proxy"))
             {
-                dict.Add("proxy", proxy);
+                dict.Add("proxy", opts["proxy"]);
                 dict.Add("proxy_type", "HTTP");
             }
+
+            // optional params
+            if (opts.ContainsKey("type")) dict.Add("type", opts["type"]);
+            if (opts.ContainsKey("v3_action")) dict.Add("v3_action", opts["v3_action"]);
+            if (opts.ContainsKey("v3_min_score")) dict.Add("v3_min_score", opts["v3_min_score"]);
+            if (opts.ContainsKey("user_agent")) dict.Add("user_agent", opts["user_agent"]);
+            if (opts.ContainsKey("affiliate_id")) dict.Add("affiliate_id", opts["affiliate_id"]);
+
             var data = JsonConvert.SerializeObject(dict);
             var resp = Utils.POST(url, data, USER_AGENT, TIMEOUT);
             dynamic d = JObject.Parse(resp);
