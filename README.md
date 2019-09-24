@@ -36,26 +36,17 @@ Console.WriteLine(string.Format("Balance: {0}", balance));
 
 ``` csharp
 var d = new Dictionary<string, string>();
-d.Add("image", "captcha.jpg");
-var id = bcs.submit_image_captcha(d);
+d.Add("image", "captcha.jpg");	   // file on disk, or b64 encoded string
+// d.Add("is_case", "true");       // case sensitive, default: false, optional
+// d.Add("is_phrase", "true");     // contains at least one space, default: false, optional
+// d.Add("is_math", "true");       // math calculation captcha, default: false, optional
+// d.Add("alphanumeric", "2");     // 1 (digits only) or 2 (letters only), default: all characters
+// d.Add("minlength", "3");        // minimum length of captcha text, default: any
+// d.Add("maxlength", "4");        // maximum length of captcha text, default: any
+// d.Add("affiliate_id", "get it from /account");      // affiliate ID
+var id = bcs.submit_image_captcha(d);			// use ID to retrieve `text`
 ```
 
-#### Optional parameters
-- case_sensitive - can be a string with value `true` or `false`
-- affiliate_id - ID of affiliate
-
-## Retrieve image captcha text
-
-Once you have the captchaID, you can check for it's completion
-``` csharp
-var id = bcs.submit_image_captcha("captcha.jpg");  // submit it and get id
-string image_text = "";
-while(image_text == "")
-{
-    image_text = bcs.retrieve(id)["text"];
-    Thread.Sleep(2000);
-}
-```
 
 ## Submit recaptcha details
 
@@ -75,23 +66,60 @@ For more details about the parameters check [/api](https://bestcaptchasolver.com
 var rd = new Dictionary<string, string>();
 rd.Add("page_url", page_url);
 rd.Add("site_key", site_key);
-var id = bcs.submit_recaptcha(rd);
+// rd.Add("type", "1");        // 1 - regular, 2 - invisible, 3 - v3, default: 1
+// rd.Add("v3_action", "home");    // action used when solving v3 reCaptcha
+// rd.Add("v3_min_score", "0.3");  // min score to target when solving v3
+// rd.Add("proxy", "user:pass@191.123.43.34");     // proxy with/out authentication
+// rd.Add("affiliate_id", "get it from /account");
+var id = bcs.submit_recaptcha(rd);		// use ID to retrieve `gresponse`
 ```
 Same as before, this returns an ID which is used to regulary check for completion
 
-## Retrieve captcha response
+
+## Submit Geetest
+- domain
+- gt
+- challenge
+
+```csharp
+var rd = new Dictionary<string, string>();
+rd.Add("domain", "DOMAIN_HERE");
+rd.Add("gt", "GT_HERE");
+rd.Add("challenge", "CHALLENGE_HERE");
+// rd.Add("affiliate_id", "get it from /account");
+
+string id = bcs.submit_geetest(rd);		// use ID to get solution
+```
+
+## Submit Capy
+- page_url
+- site_key
+
+```csharp
+var rd = new Dictionary<string, string>();
+rd.Add("page_url", "PAGE_URL_HERE");
+rd.Add("site_key", "SITE_KEY_HERE");
+// rd.Add("affiliate_id", "get it from /account");
+
+string id = bcs.submit_capy(rd);		// use ID to get solution
+```
+
+## Retrieve (all captchas)
+
+Use the retrieve method to retrieve text (image captcha), gresponse (reCAPTCHA) or solution (GeeTest and Capy)
 
 ```csharp
 id = bcs.submit_recaptcha(page_url, site_key);
 string gresponse = "";
 while (gresponse == "")
 {
-     gresponse = bcs.retrieve(id)["gresponse"];
+     gresponse = bcs.retrieve(id)["gresponse"];		// can be also `text` or `solution`
      Thread.Sleep(5000);
 }
 ```
 
-## If submitted with proxy, get proxy status
+
+## If reCAPTCHA is submitted with proxy, get proxy status
 
 ``` csharp
 var proxy_status = bcs.retrieve(id)["proxy_status"];

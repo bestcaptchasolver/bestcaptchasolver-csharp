@@ -12,7 +12,7 @@ namespace bestcaptchasolver
     {
         private const string BASE_URL = "https://bcsapi.xyz/api";
         private const string USER_AGENT = "csharpClient1.0";
-        private const int TIMEOUT = 30000;
+        private const int TIMEOUT = 6000000;
 
         private string _access_token;
         private int _timeout;
@@ -22,7 +22,7 @@ namespace bestcaptchasolver
         /// </summary>
         /// <param name="access_token"></param>
         /// <param name="timeout"></param>
-        public BestCaptchaSolverAPI(string access_token, int timeout = 30000)
+        public BestCaptchaSolverAPI(string access_token, int timeout = 6000000)
         {
             this._access_token = access_token;
             this._timeout = timeout;
@@ -55,11 +55,26 @@ namespace bestcaptchasolver
             if (File.Exists(opts["image"])) image = Utils.read_captcha_image(opts["image"]);
             else image = opts["image"];
             dict.Add("b64image", image);
-            // check case sensitive
+            // optional parameters
             if (opts.ContainsKey("case_sensitive"))
             {
-                if (opts["case_sensitive"].Equals("true")) dict.Add("case_sensitive", "1");
+                if (opts["case_sensitive"].Equals("true")) dict.Add("is_case", "true");
             }
+            if (opts.ContainsKey("is_case"))
+            {
+                if (opts["is_case"].Equals("true")) dict.Add("is_case", "true");
+            }
+            if (opts.ContainsKey("is_phrase"))
+            {
+                if (opts["is_phrase"].Equals("true")) dict.Add("is_phrase", "true");
+            }
+            if (opts.ContainsKey("is_math"))
+            {
+                if (opts["is_math"].Equals("true")) dict.Add("is_math", "true");
+            }
+            if (opts.ContainsKey("alphanumeric")) dict.Add("alphanumeric", opts["alphanumeric"]);
+            if (opts.ContainsKey("minlength")) dict.Add("minlength", opts["minlength"]);
+            if (opts.ContainsKey("maxlength")) dict.Add("maxlength", opts["maxlength"]);
             // affiliate ID
             if (opts.ContainsKey("affiliate_id")) dict.Add("affiliate_id", opts["affiliate_id"]);
             var data = JsonConvert.SerializeObject(dict);
@@ -68,7 +83,7 @@ namespace bestcaptchasolver
             return d.id.ToString();
         }
         /// <summary>
-        /// Submit image captcha
+        /// Submit reCAPTCHA
         /// </summary>
         /// <param name="opts"></param>
         /// <returns>captchaID</returns>
@@ -99,6 +114,40 @@ namespace bestcaptchasolver
         }
 
         /// <summary>
+        /// Submit GeeTest
+        /// </summary>
+        /// <param name="opts"></param>
+        /// <returns>captchaID</returns>
+        public string submit_geetest(Dictionary<string, string> opts)
+        {
+            Dictionary<string, string> dict = new Dictionary<string, string>();
+            var url = string.Format("{0}/captcha/geetest", BASE_URL);
+            opts.Add("access_token", this._access_token);
+
+            var data = JsonConvert.SerializeObject(opts);
+            var resp = Utils.POST(url, data, USER_AGENT, TIMEOUT);
+            dynamic d = JObject.Parse(resp);
+            return d.id.ToString();
+        }
+
+        /// <summary>
+        /// Submit Capy
+        /// </summary>
+        /// <param name="opts"></param>
+        /// <returns>captchaID</returns>
+        public string submit_capy(Dictionary<string, string> opts)
+        {
+            Dictionary<string, string> dict = new Dictionary<string, string>();
+            var url = string.Format("{0}/captcha/capy", BASE_URL);
+            opts.Add("access_token", this._access_token);
+
+            var data = JsonConvert.SerializeObject(opts);
+            var resp = Utils.POST(url, data, USER_AGENT, TIMEOUT);
+            dynamic d = JObject.Parse(resp);
+            return d.id.ToString();
+        }
+
+        /// <summary>
         /// Retrieve captcha text / gresponse using captcha ID
         /// </summary>
         /// <param name="captchaid"></param>
@@ -114,6 +163,7 @@ namespace bestcaptchasolver
                 var dd = new Dictionary<string, string>();
                 dd.Add("gresponse", "");
                 dd.Add("text", "");
+                dd.Add("solution", "");
                 return dd;
             }
             // we're good, create dict and return
