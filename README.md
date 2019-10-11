@@ -104,6 +104,19 @@ rd.Add("site_key", "SITE_KEY_HERE");
 string id = bcs.submit_capy(rd);		// use ID to get solution
 ```
 
+## Submit hCaptcha
+- page_url
+- site_key
+
+```csharp
+var rd = new Dictionary<string, string>();
+rd.Add("page_url", "PAGE_URL_HERE");
+rd.Add("site_key", "SITE_KEY_HERE");
+// rd.Add("affiliate_id", "get it from /account");
+
+string id = bcs.submit_hcaptcha(rd);		// use ID to get solution
+```
+
 ## Retrieve (all captchas)
 
 Use the retrieve method to retrieve text (image captcha), gresponse (reCAPTCHA) or solution (GeeTest and Capy)

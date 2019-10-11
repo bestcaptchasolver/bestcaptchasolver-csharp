@@ -133,6 +133,32 @@ namespace example
         }
 
         /// <summary>
+        /// Capy solving
+        /// </summary>
+        static void test_hcaptcha()
+        {
+            // account balance
+            string balance = bcs.account_balance();
+            Console.WriteLine(string.Format("Balance: {0}", balance));
+
+            Console.WriteLine("Solving hCaptcha ...");
+            var rd = new Dictionary<string, string>();
+            rd.Add("page_url", "PAGE_URL_HERE");
+            rd.Add("site_key", "SITE_KEY_HERE");
+            // rd.Add("affiliate_id", "get it from /account");
+
+            string id = bcs.submit_hcaptcha(rd);
+            string solution = "";
+            while (solution == "")
+            {
+                solution = bcs.retrieve(id)["solution"];
+                Thread.Sleep(5000);
+            }
+            Console.WriteLine(string.Format("Solution: {0}", solution));
+            // bcs.set_captcha_bad(id);      // set captcha as bad
+        }
+
+        /// <summary>
         /// Main method
         /// </summary>
         /// <param name="args"></param>
@@ -144,6 +170,7 @@ namespace example
                 // test_recaptcha();
                 // test_geetest();
                 // test_capy();
+                // test_hcaptcha();
             }
             catch (Exception ex)
             {

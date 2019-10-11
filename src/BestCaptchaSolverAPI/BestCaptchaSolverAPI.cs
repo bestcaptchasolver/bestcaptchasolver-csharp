@@ -148,6 +148,23 @@ namespace bestcaptchasolver
         }
 
         /// <summary>
+        /// Submit hCaptcha
+        /// </summary>
+        /// <param name="opts"></param>
+        /// <returns>captchaID</returns>
+        public string submit_hcaptcha(Dictionary<string, string> opts)
+        {
+            Dictionary<string, string> dict = new Dictionary<string, string>();
+            var url = string.Format("{0}/captcha/hcaptcha", BASE_URL);
+            opts.Add("access_token", this._access_token);
+
+            var data = JsonConvert.SerializeObject(opts);
+            var resp = Utils.POST(url, data, USER_AGENT, TIMEOUT);
+            dynamic d = JObject.Parse(resp);
+            return d.id.ToString();
+        }
+
+        /// <summary>
         /// Retrieve captcha text / gresponse using captcha ID
         /// </summary>
         /// <param name="captchaid"></param>
