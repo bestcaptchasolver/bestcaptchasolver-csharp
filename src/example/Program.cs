@@ -64,6 +64,7 @@ namespace example
             // rd.Add("type", "1");        // 1 - regular, 2 - invisible, 3 - v3, default: 1
             // rd.Add("v3_action", "home");    // action used when solving v3 reCaptcha
             // rd.Add("v3_min_score", "0.3");  // min score to target when solving v3
+            // rd.Add("data_s", "recaptcha data-s parameter used in loading reCAPTCHA");  // optional
             // rd.Add("proxy", "user:pass@191.123.43.34");     // proxy with/out authentication
             // rd.Add("affiliate_id", "get it from /account");
 
