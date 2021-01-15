@@ -60,12 +60,23 @@ namespace example
             rd.Add("page_url", page_url);
             rd.Add("site_key", site_key);
 
-            // optional parameters
-            // rd.Add("type", "1");        // 1 - regular, 2 - invisible, 3 - v3, default: 1
+            // other parameters
+            // ----------------------------------------------------------------------
+            // reCAPTCHA type(s) - optional, defaults to 1
+            // ---------------------------------------------
+            // 1 - v2
+            // 2 - invisible
+            // 3 - v3
+            // 4 - enterprise v2
+            // 5 - enterprise v3
+            //
+            // rd.Add("type", "1");
+            //
             // rd.Add("v3_action", "home");    // action used when solving v3 reCaptcha
             // rd.Add("v3_min_score", "0.3");  // min score to target when solving v3
             // rd.Add("data_s", "recaptcha data-s parameter used in loading reCAPTCHA");  // optional
-            // rd.Add("proxy", "user:pass@191.123.43.34");     // proxy with/out authentication
+            // rd.Add("cookie_input", "a=b;c=d");  // used in solving reCAPTCHA, optional
+            // rd.Add("proxy", "user:pass@191.123.43.34:301");     // proxy with/out authentication
             // rd.Add("affiliate_id", "get it from /account");
 
             string id = bcs.submit_recaptcha(rd);
