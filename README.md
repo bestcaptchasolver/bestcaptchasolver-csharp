@@ -122,6 +122,22 @@ rd.Add("site_key", "SITE_KEY_HERE");
 string id = bcs.submit_hcaptcha(rd);		// use ID to get solution
 ```
 
+## Submit FunCaptcha (Arkose Labs)
+- page_url
+- s_url
+- site_key
+
+```csharp
+var rd = new Dictionary<string, string>();
+rd.Add("page_url", "https://abc.com");
+rd.Add("s_url", "https://api.arkoselabs.com");
+rd.Add("site_key", "11111111-1111-1111-1111-111111111111");
+// rd.Add("data", "{\"x\":\"y\"}");      // optional
+// rd.Add("affiliate_id", "your_affiliate_id");      // optional, get it from /account
+
+string id = bcs.submit_funcaptcha(rd);
+```
+
 ## Retrieve (all captchas)
 
 Use the retrieve method to retrieve text (image captcha), gresponse (reCAPTCHA) or solution (GeeTest and Capy)

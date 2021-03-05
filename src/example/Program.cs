@@ -171,6 +171,34 @@ namespace example
         }
 
         /// <summary>
+        /// Funcaptcha solving
+        /// </summary>
+        static void test_funcaptcha()
+        {
+            // account balance
+            string balance = bcs.account_balance();
+            Console.WriteLine(string.Format("Balance: {0}", balance));
+
+            Console.WriteLine("Solving FunCaptcha ...");
+            var rd = new Dictionary<string, string>();
+            rd.Add("page_url", "https://abc.com");
+            rd.Add("s_url", "https://api.arkoselabs.com");
+            rd.Add("site_key", "11111111-1111-1111-1111-111111111111");
+            // rd.Add("data", "{\"x\":\"y\"}");      // optional
+            // rd.Add("affiliate_id", "your_affiliate_id");      // optional, get it from /account
+
+            string id = bcs.submit_funcaptcha(rd);
+            string solution = "";
+            while (solution == "")
+            {
+                solution = bcs.retrieve(id)["solution"];
+                Thread.Sleep(5000);
+            }
+            Console.WriteLine(string.Format("Solution: {0}", solution));
+            // bcs.set_captcha_bad(id);      // set captcha as bad
+        }
+
+        /// <summary>
         /// Main method
         /// </summary>
         /// <param name="args"></param>
@@ -178,11 +206,12 @@ namespace example
         {
             try
             {
-                test_image();
-                // test_recaptcha();
+                // test_image();
+                test_recaptcha();
                 // test_geetest();
                 // test_capy();
                 // test_hcaptcha();
+                // test_funcaptcha();
             }
             catch (Exception ex)
             {

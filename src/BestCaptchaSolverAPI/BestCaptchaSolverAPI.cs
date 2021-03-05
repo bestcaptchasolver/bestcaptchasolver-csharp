@@ -150,6 +150,23 @@ namespace bestcaptchasolver
         }
 
         /// <summary>
+        /// Submit FunCaptcha
+        /// </summary>
+        /// <param name="opts"></param>
+        /// <returns>captchaID</returns>
+        public string submit_funcaptcha(Dictionary<string, string> opts)
+        {
+            Dictionary<string, string> dict = new Dictionary<string, string>();
+            var url = string.Format("{0}/captcha/funcaptcha", BASE_URL);
+            opts.Add("access_token", this._access_token);
+
+            var data = JsonConvert.SerializeObject(opts);
+            var resp = Utils.POST(url, data, USER_AGENT, TIMEOUT);
+            dynamic d = JObject.Parse(resp);
+            return d.id.ToString();
+        }
+
+        /// <summary>
         /// Submit hCaptcha
         /// </summary>
         /// <param name="opts"></param>
