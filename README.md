@@ -85,12 +85,14 @@ Same as before, this returns an ID which is used to regulary check for completio
 - domain
 - gt
 - challenge
+- api_server (optional)
 
 ```csharp
 var rd = new Dictionary<string, string>();
 rd.Add("domain", "DOMAIN_HERE");
 rd.Add("gt", "GT_HERE");
 rd.Add("challenge", "CHALLENGE_HERE");
+// rd.Add("api_server", "GT_DOMAIN_HERE"); // optional
 // rd.Add("affiliate_id", "get it from /account");
 
 string id = bcs.submit_geetest(rd);		// use ID to get solution

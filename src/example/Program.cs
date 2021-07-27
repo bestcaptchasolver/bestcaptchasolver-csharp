@@ -105,6 +105,7 @@ namespace example
             rd.Add("domain", "DOMAIN_HERE");
             rd.Add("gt", "GT_HERE");
             rd.Add("challenge", "CHALLENGE_HERE");
+            // rd.Add("api_server", "GT_DOMAIN_HERE"); // optional
             // rd.Add("affiliate_id", "get it from /account");
 
             string id = bcs.submit_geetest(rd);
