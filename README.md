@@ -3,7 +3,7 @@ BestCaptchaSolver API wrapper C#
 bestcaptchasolverapi is a super easy to use bypass captcha API wrapper for bestcaptchasolver.com captcha service
 
 ## Installation
-    
+
     git clone https://github.com/bestcaptchasolver/bestcaptchasolver-csharp
 
 ## How to use?
@@ -98,7 +98,24 @@ rd.Add("challenge", "CHALLENGE_HERE");
 string id = bcs.submit_geetest(rd);		// use ID to get solution
 ```
 
+## Submit GeetestV4
+
+- domain
+- captchaid
+
+**Important:** This is not the captchaid that's in our system that you receive while submitting a captcha. Gather this from HTML source of page with geetestv4 captcha, inside the `<script>` tag you'll find a link that looks like this: https://i.imgur.com/XcZd47y.png
+
+```csharp
+var rd = new Dictionary<string, string>();
+rd.Add("domain", "https://example.com");
+rd.Add("captchaid", "647f5ed2ed8acb4be36784e01556bb71");
+// rd.Add("affiliate_id", "get it from /account");
+
+string id = bcs.submit_geetest_v4(rd);		// use ID to get solution
+```
+
 ## Submit Capy
+
 - page_url
 - site_key
 

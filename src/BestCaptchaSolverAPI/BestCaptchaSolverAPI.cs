@@ -116,6 +116,23 @@ namespace bestcaptchasolver
         }
 
         /// <summary>
+        /// Submit GeeTestV4
+        /// </summary>
+        /// <param name="opts"></param>
+        /// <returns>captchaID</returns>
+        public string submit_geetest_v4(Dictionary<string, string> opts)
+        {
+            Dictionary<string, string> dict = new Dictionary<string, string>();
+            var url = string.Format("{0}/captcha/geetestv4", BASE_URL);
+            opts.Add("access_token", this._access_token);
+
+            var data = JsonConvert.SerializeObject(opts);
+            var resp = Utils.POST(url, data, USER_AGENT, TIMEOUT);
+            dynamic d = JObject.Parse(resp);
+            return d.id.ToString();
+        }
+
+        /// <summary>
         /// Submit GeeTest
         /// </summary>
         /// <param name="opts"></param>

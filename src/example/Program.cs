@@ -120,6 +120,32 @@ namespace example
         }
 
         /// <summary>
+        /// GeeTestV4 solving
+        /// </summary>
+        static void test_geetestv4()
+        {
+            // account balance
+            string balance = bcs.account_balance();
+            Console.WriteLine(string.Format("Balance: {0}", balance));
+
+            Console.WriteLine("Solving geetestv4 ...");
+            var rd = new Dictionary<string, string>();
+            rd.Add("domain", "https://example.com");
+            rd.Add("captchaid", "647f5ed2ed8acb4be36784e01556bb71");
+            // rd.Add("affiliate_id", "get it from /account");
+
+            string id = bcs.submit_geetest_v4(rd);
+            string solution = "";
+            while (solution == "")
+            {
+                solution = bcs.retrieve(id)["solution"];
+                Thread.Sleep(5000);
+            }
+            Console.WriteLine(string.Format("Solution: {0}", solution));
+            // bcs.set_captcha_bad(id);      // set captcha as bad
+        }
+
+        /// <summary>
         /// Capy solving
         /// </summary>
         static void test_capy()
@@ -210,6 +236,7 @@ namespace example
                 // test_image();
                 test_recaptcha();
                 // test_geetest();
+                // test_geetestv4();
                 // test_capy();
                 // test_hcaptcha();
                 // test_funcaptcha();
