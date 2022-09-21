@@ -184,6 +184,10 @@ namespace example
             var rd = new Dictionary<string, string>();
             rd.Add("page_url", "PAGE_URL_HERE");
             rd.Add("site_key", "SITE_KEY_HERE");
+            // rd.Add("invisible", "1");
+            // rd.Add("payload", "{\"rqdata\": \"from web requests\"}");
+            // rd.Add("user_agent", "your user agent");
+            // rd.Add("proxy", "12.34.56.78:1234");
             // rd.Add("affiliate_id", "get it from /account");
 
             string id = bcs.submit_hcaptcha(rd);
@@ -208,13 +212,42 @@ namespace example
 
             Console.WriteLine("Solving FunCaptcha ...");
             var rd = new Dictionary<string, string>();
-            rd.Add("page_url", "https://abc.com");
-            rd.Add("s_url", "https://api.arkoselabs.com");
+            rd.Add("page_url", "PAGE_URL_HERE");
+            rd.Add("s_url", "SITE_KEY_HERE");
             rd.Add("site_key", "11111111-1111-1111-1111-111111111111");
             // rd.Add("data", "{\"x\":\"y\"}");      // optional
             // rd.Add("affiliate_id", "your_affiliate_id");      // optional, get it from /account
 
             string id = bcs.submit_funcaptcha(rd);
+            string solution = "";
+            while (solution == "")
+            {
+                solution = bcs.retrieve(id)["solution"];
+                Thread.Sleep(5000);
+            }
+            Console.WriteLine(string.Format("Solution: {0}", solution));
+            // bcs.set_captcha_bad(id);      // set captcha as bad
+        }
+
+        /// <summary>
+        /// Task solving
+        /// </summary>
+        static void test_task()
+        {
+            // account balance
+            string balance = bcs.account_balance();
+            Console.WriteLine(string.Format("Balance: {0}", balance));
+
+            Console.WriteLine("Solving task ...");
+            var rd = new Dictionary<string, string>();
+            rd.Add("template_name", "Login test page");
+            rd.Add("page_url", "https://bestcaptchasolver.com/automation/login");
+            rd.Add("variables", "{\"username\": \"from C#\", \"password\": \"1234\"}");
+            // rd.Add("user_agent", "your user agent");
+            // rd.Add("proxy", "12.34.56.78:1234");
+            // rd.Add("affiliate_id", "your_affiliate_id");      // optional, get it from /account
+
+            string id = bcs.submit_task(rd);
             string solution = "";
             while (solution == "")
             {
@@ -240,6 +273,7 @@ namespace example
                 // test_capy();
                 // test_hcaptcha();
                 // test_funcaptcha();
+                // test_task();
             }
             catch (Exception ex)
             {
