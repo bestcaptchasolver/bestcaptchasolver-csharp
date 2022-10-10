@@ -218,6 +218,25 @@ namespace bestcaptchasolver
         }
 
         /// <summary>
+        /// Push variables for task
+        /// </summary>
+        /// <param name="captchaid">ID of captcha task</param>
+        /// <param name="push_variables">Variables that will be pushed</param>
+        /// <returns>captchaID</returns>
+        public string task_push_variables(string captchaid, string push_variables)
+        {
+            Dictionary<string, string> dict = new Dictionary<string, string>();
+            var url = string.Format("{0}/captcha/task/pushVariables/{1}", BASE_URL, captchaid);
+            dict.Add("access_token", this._access_token);
+            dict.Add("pushVariables", push_variables);
+
+            var data = JsonConvert.SerializeObject(dict);
+            var resp = Utils.POST(url, data, USER_AGENT, TIMEOUT);
+            dynamic d = JObject.Parse(resp);
+            return d.status.ToString();
+        }
+
+        /// <summary>
         /// Retrieve captcha text / gresponse using captcha ID
         /// </summary>
         /// <param name="captchaid"></param>

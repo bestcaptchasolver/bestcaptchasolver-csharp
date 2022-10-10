@@ -157,6 +157,38 @@ rd.Add("site_key", "11111111-1111-1111-1111-111111111111");
 string id = bcs.submit_funcaptcha(rd);
 ```
 
+## Submit Task
+- template_name
+- page_url
+- variables
+
+```csharp
+var rd = new Dictionary<string, string>();
+rd.Add("template_name", "Login test page");
+rd.Add("page_url", "https://bestcaptchasolver.com/automation/login");
+rd.Add("variables", "{\"username\": \"from C#\", \"password\": \"1234\"}");
+// rd.Add("user_agent", "your user agent");
+// rd.Add("proxy", "12.34.56.78:1234");
+// rd.Add("affiliate_id", "your_affiliate_id");      // optional, get it from /account
+
+string id = bcs.submit_task(rd);
+```
+
+#### Task pushVariables
+Update task variables while it is being solved by the worker. Useful when dealing with data / variables, of which
+value you don't know, only after a certain step or action of the task. For example, in websites that require 2 factor
+authentication code.
+
+When the task (while running on workers machine) is getting to an action defined in the template, that requires a variable, but variable was not
+set with the task submission, it will wait until the variable is updated through push.
+
+The `bcs.task_push_variables(captcha_id, push_variables)` method can be used as many times as it is needed.
+
+```csharp
+bcs.task_push_variables(id, "{\"tfa_code\": \"4612\"}");
+```
+
+
 ## Retrieve (all captchas)
 
 Use the retrieve method to retrieve text (image captcha), gresponse (reCAPTCHA) or solution (GeeTest and Capy)

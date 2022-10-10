@@ -248,6 +248,11 @@ namespace example
             // rd.Add("affiliate_id", "your_affiliate_id");      // optional, get it from /account
 
             string id = bcs.submit_task(rd);
+
+            // submit pushVariables while task is being solved by the worker
+            // very helpful, for e.g. in cases of 2FA authentication
+            // bcs.task_push_variables(id, "{\"tfa_code\": \"4612\"}");
+
             string solution = "";
             while (solution == "")
             {
