@@ -104,6 +104,7 @@ namespace bestcaptchasolver
             if (opts.ContainsKey("type")) dict.Add("type", opts["type"]);
             if (opts.ContainsKey("v3_action")) dict.Add("v3_action", opts["v3_action"]);
             if (opts.ContainsKey("v3_min_score")) dict.Add("v3_min_score", opts["v3_min_score"]);
+            if (opts.ContainsKey("domain")) dict.Add("domain", opts["domain"]);
             if (opts.ContainsKey("data_s")) dict.Add("data_s", opts["data_s"]);
             if (opts.ContainsKey("cookie_input")) dict.Add("cookie_input", opts["cookie_input"]);
             if (opts.ContainsKey("user_agent")) dict.Add("user_agent", opts["user_agent"]);

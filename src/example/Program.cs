@@ -74,6 +74,7 @@ namespace example
             //
             // rd.Add("v3_action", "home");    // action used when solving v3 reCaptcha
             // rd.Add("v3_min_score", "0.3");  // min score to target when solving v3
+            // rd.Add("domain", "www.google.com");  // used in loading reCAPTCHA interface, optional
             // rd.Add("data_s", "recaptcha data-s parameter used in loading reCAPTCHA");  // optional
             // rd.Add("cookie_input", "a=b;c=d");  // used in solving reCAPTCHA, optional
             // rd.put("user_agent", "your user agent");        // UA used in solving captcha
@@ -193,6 +194,7 @@ namespace example
             rd.Add("site_key", "SITE_KEY_HERE");
             // rd.Add("invisible", "1");
             // rd.Add("payload", "{\"rqdata\": \"from web requests\"}");
+            // rd.Add("domain", "hcaptcha.com");  // used in loading hcaptcha interface, optional
             // rd.Add("user_agent", "your user agent");
             // rd.Add("proxy", "12.34.56.78:1234");
             // rd.Add("affiliate_id", "get it from /account");

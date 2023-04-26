@@ -58,6 +58,7 @@ For recaptcha submission there are two things that are required.
   - `5` - enterprise v3
 - v3_action (optional)
 - v3_min_score (optional)
+- domain (optional)
 - data_s (optional)
 - cookie_input (optional)
 - user_agent (optional)
@@ -73,6 +74,7 @@ rd.Add("site_key", site_key);
 // rd.Add("type", "1");        // 1 - regular, 2 - invisible, 3 - v3, default: 1
 // rd.Add("v3_action", "home");    // action used when solving v3 reCaptcha
 // rd.Add("v3_min_score", "0.3");  // min score to target when solving v3
+// rd.Add("domain", "www.google.com");  // used in loading reCAPTCHA interface, optional
 // rd.Add("data_s", "recaptcha data-s parameter used in loading reCAPTCHA");
 // rd.put("user_agent", "your user agent");        // UA used in solving captcha
 // rd.Add("proxy", "user:pass@191.123.43.34");     // proxy with/out authentication
@@ -146,6 +148,7 @@ string id = bcs.submit_capy(rd);		// use ID to get solution
 - site_key
 - invisible (optional)
 - payload (optional)
+- domain (optional)
 - user_agent (optional)
 - proxy (optional)
 
@@ -155,6 +158,7 @@ rd.Add("page_url", "PAGE_URL_HERE");
 rd.Add("site_key", "SITE_KEY_HERE");
 // rd.Add("invisible", "1");
 // rd.Add("payload", "{\"rqdata\": \"from web requests\"}");
+// rd.Add("domain", "hcaptcha.com");  // used in loading hcaptcha interface, optional
 // rd.Add("user_agent", "your user agent");
 // rd.Add("proxy", "12.34.56.78:1234");
 // rd.Add("affiliate_id", "get it from /account");
