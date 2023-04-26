@@ -74,6 +74,7 @@ rd.Add("site_key", site_key);
 // rd.Add("v3_action", "home");    // action used when solving v3 reCaptcha
 // rd.Add("v3_min_score", "0.3");  // min score to target when solving v3
 // rd.Add("data_s", "recaptcha data-s parameter used in loading reCAPTCHA");
+// rd.put("user_agent", "your user agent");        // UA used in solving captcha
 // rd.Add("proxy", "user:pass@191.123.43.34");     // proxy with/out authentication
 // rd.Add("affiliate_id", "get it from /account");
 var id = bcs.submit_recaptcha(rd);		// use ID to retrieve `gresponse`
@@ -86,14 +87,18 @@ Same as before, this returns an ID which is used to regulary check for completio
 - gt
 - challenge
 - api_server (optional)
+- user_agent (optional)
+- proxy (optional)
 
 ```csharp
 var rd = new Dictionary<string, string>();
 rd.Add("domain", "DOMAIN_HERE");
 rd.Add("gt", "GT_HERE");
 rd.Add("challenge", "CHALLENGE_HERE");
-// rd.Add("api_server", "GT_DOMAIN_HERE"); // optional
-// rd.Add("affiliate_id", "get it from /account");
+// rd.Add("api_server", "GT_DOMAIN_HERE");           // optional
+// rd.put("user_agent", "your user agent");          // UA used in solving captcha, optional
+// rd.Add("proxy", "user:pass@191.123.43.34:301");   // proxy with/out authentication, optional
+// rd.Add("affiliate_id", "get it from /account");   // optional
 
 string id = bcs.submit_geetest(rd);		// use ID to get solution
 ```
@@ -102,6 +107,8 @@ string id = bcs.submit_geetest(rd);		// use ID to get solution
 
 - domain
 - captchaid
+- user_agent (optional)
+- proxy (optional)
 
 **Important:** This is not the captchaid that's in our system that you receive while submitting a captcha. Gather this from HTML source of page with geetestv4 captcha, inside the `<script>` tag you'll find a link that looks like this: https://i.imgur.com/XcZd47y.png
 
@@ -109,7 +116,9 @@ string id = bcs.submit_geetest(rd);		// use ID to get solution
 var rd = new Dictionary<string, string>();
 rd.Add("domain", "https://example.com");
 rd.Add("captchaid", "647f5ed2ed8acb4be36784e01556bb71");
-// rd.Add("affiliate_id", "get it from /account");
+// rd.put("user_agent", "your user agent");          // UA used in solving captcha, optional
+// rd.Add("proxy", "user:pass@191.123.43.34:301");   // proxy with/out authentication, optional
+// rd.Add("affiliate_id", "get it from /account");   // optional
 
 string id = bcs.submit_geetest_v4(rd);		// use ID to get solution
 ```
@@ -118,12 +127,16 @@ string id = bcs.submit_geetest_v4(rd);		// use ID to get solution
 
 - page_url
 - site_key
+- user_agent (optional)
+- proxy (optional)
 
 ```csharp
 var rd = new Dictionary<string, string>();
 rd.Add("page_url", "PAGE_URL_HERE");
 rd.Add("site_key", "SITE_KEY_HERE");
-// rd.Add("affiliate_id", "get it from /account");
+// rd.put("user_agent", "your user agent");          // UA used in solving captcha, optional
+// rd.Add("proxy", "user:pass@191.123.43.34:301");   // proxy with/out authentication, optional
+// rd.Add("affiliate_id", "get it from /account");   // optional
 
 string id = bcs.submit_capy(rd);		// use ID to get solution
 ```
@@ -131,11 +144,19 @@ string id = bcs.submit_capy(rd);		// use ID to get solution
 ## Submit hCaptcha
 - page_url
 - site_key
+- invisible (optional)
+- payload (optional)
+- user_agent (optional)
+- proxy (optional)
 
 ```csharp
 var rd = new Dictionary<string, string>();
 rd.Add("page_url", "PAGE_URL_HERE");
 rd.Add("site_key", "SITE_KEY_HERE");
+// rd.Add("invisible", "1");
+// rd.Add("payload", "{\"rqdata\": \"from web requests\"}");
+// rd.Add("user_agent", "your user agent");
+// rd.Add("proxy", "12.34.56.78:1234");
 // rd.Add("affiliate_id", "get it from /account");
 
 string id = bcs.submit_hcaptcha(rd);		// use ID to get solution
@@ -145,6 +166,9 @@ string id = bcs.submit_hcaptcha(rd);		// use ID to get solution
 - page_url
 - s_url
 - site_key
+- data (optional)
+- user_agent (optional)
+- proxy (optional)
 
 ```csharp
 var rd = new Dictionary<string, string>();
@@ -152,7 +176,9 @@ rd.Add("page_url", "https://abc.com");
 rd.Add("s_url", "https://api.arkoselabs.com");
 rd.Add("site_key", "11111111-1111-1111-1111-111111111111");
 // rd.Add("data", "{\"x\":\"y\"}");      // optional
-// rd.Add("affiliate_id", "your_affiliate_id");      // optional, get it from /account
+// rd.put("user_agent", "your user agent");          // UA used in solving captcha, optional
+// rd.Add("proxy", "user:pass@191.123.43.34:301");   // proxy with/out authentication, optional
+// rd.Add("affiliate_id", "get it from /account");   // optional
 
 string id = bcs.submit_funcaptcha(rd);
 ```
@@ -161,6 +187,8 @@ string id = bcs.submit_funcaptcha(rd);
 - template_name
 - page_url
 - variables
+- user_agent (optional)
+- proxy (optional)
 
 ```csharp
 var rd = new Dictionary<string, string>();

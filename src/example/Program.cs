@@ -76,6 +76,7 @@ namespace example
             // rd.Add("v3_min_score", "0.3");  // min score to target when solving v3
             // rd.Add("data_s", "recaptcha data-s parameter used in loading reCAPTCHA");  // optional
             // rd.Add("cookie_input", "a=b;c=d");  // used in solving reCAPTCHA, optional
+            // rd.put("user_agent", "your user agent");        // UA used in solving captcha
             // rd.Add("proxy", "user:pass@191.123.43.34:301");     // proxy with/out authentication
             // rd.Add("affiliate_id", "get it from /account");
 
@@ -105,8 +106,10 @@ namespace example
             rd.Add("domain", "DOMAIN_HERE");
             rd.Add("gt", "GT_HERE");
             rd.Add("challenge", "CHALLENGE_HERE");
-            // rd.Add("api_server", "GT_DOMAIN_HERE"); // optional
-            // rd.Add("affiliate_id", "get it from /account");
+            // rd.Add("api_server", "GT_DOMAIN_HERE");           // optional
+            // rd.put("user_agent", "your user agent");          // UA used in solving captcha, optional
+            // rd.Add("proxy", "user:pass@191.123.43.34:301");   // proxy with/out authentication, optional
+            // rd.Add("affiliate_id", "get it from /account");   // optional
 
             string id = bcs.submit_geetest(rd);
             string solution = "";
@@ -132,7 +135,9 @@ namespace example
             var rd = new Dictionary<string, string>();
             rd.Add("domain", "https://example.com");
             rd.Add("captchaid", "647f5ed2ed8acb4be36784e01556bb71");
-            // rd.Add("affiliate_id", "get it from /account");
+            // rd.put("user_agent", "your user agent");          // UA used in solving captcha, optional
+            // rd.Add("proxy", "user:pass@191.123.43.34:301");   // proxy with/out authentication, optional
+            // rd.Add("affiliate_id", "get it from /account");   // optional
 
             string id = bcs.submit_geetest_v4(rd);
             string solution = "";
@@ -158,7 +163,9 @@ namespace example
             var rd = new Dictionary<string, string>();
             rd.Add("page_url", "PAGE_URL_HERE");
             rd.Add("site_key", "SITE_KEY_HERE");
-            // rd.Add("affiliate_id", "get it from /account");
+            // rd.put("user_agent", "your user agent");          // UA used in solving captcha, optional
+            // rd.Add("proxy", "user:pass@191.123.43.34:301");   // proxy with/out authentication, optional
+            // rd.Add("affiliate_id", "get it from /account");   // optional
 
             string id = bcs.submit_capy(rd);
             string solution = "";
@@ -216,7 +223,9 @@ namespace example
             rd.Add("s_url", "SITE_KEY_HERE");
             rd.Add("site_key", "11111111-1111-1111-1111-111111111111");
             // rd.Add("data", "{\"x\":\"y\"}");      // optional
-            // rd.Add("affiliate_id", "your_affiliate_id");      // optional, get it from /account
+            // rd.put("user_agent", "your user agent");          // UA used in solving captcha, optional
+            // rd.Add("proxy", "user:pass@191.123.43.34:301");   // proxy with/out authentication, optional
+            // rd.Add("affiliate_id", "get it from /account");   // optional
 
             string id = bcs.submit_funcaptcha(rd);
             string solution = "";
@@ -282,7 +291,7 @@ namespace example
             }
             catch (Exception ex)
             {
-                Console.WriteLine(string.Format("Error occured: {0}", ex.ToString()));
+                Console.WriteLine(string.Format("Error occurred: {0}", ex.ToString()));
             }
             finally
             {
