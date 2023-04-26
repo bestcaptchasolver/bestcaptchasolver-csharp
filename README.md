@@ -187,6 +187,29 @@ rd.Add("site_key", "11111111-1111-1111-1111-111111111111");
 string id = bcs.submit_funcaptcha(rd);
 ```
 
+## Submit Turnstile (Cloudflare)
+- page_url
+- site_key
+- action (optional)
+- cdata (optional)
+- domain (optional)
+- user_agent (optional)
+- proxy (optional)
+
+```csharp
+var rd = new Dictionary<string, string>();
+rd.Add("page_url", "PAGE_URL_HERE");
+rd.Add("site_key", "SITE_KEY_HERE");
+// rd.Add("action", "taken from page source, optional");
+// rd.Add("cdata", "taken from page source, optional");
+// rd.Add("domain", "challenges.cloudflare.com");    // used in loading hcaptcha interface, optional
+// rd.Add("user_agent", "your UA");                  // optional
+// rd.Add("proxy", "12.34.56.78:1234");              // optional
+// rd.Add("affiliate_id", "your_affiliate_id");      // get it from /account
+
+string id = bcs.submit_turnstile(rd);
+```
+
 ## Submit Task
 - template_name
 - page_url

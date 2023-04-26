@@ -180,7 +180,7 @@ namespace example
         }
 
         /// <summary>
-        /// Capy solving
+        /// hCaptcha solving
         /// </summary>
         static void test_hcaptcha()
         {
@@ -241,6 +241,37 @@ namespace example
         }
 
         /// <summary>
+        /// Turnstile (Cloudflare) solving
+        /// </summary>
+        static void test_turnstile()
+        {
+            // account balance
+            string balance = bcs.account_balance();
+            Console.WriteLine(string.Format("Balance: {0}", balance));
+
+            Console.WriteLine("Solving Turnstile ...");
+            var rd = new Dictionary<string, string>();
+            rd.Add("page_url", "PAGE_URL_HERE");
+            rd.Add("site_key", "SITE_KEY_HERE");
+            // rd.Add("action", "taken from page source, optional");
+            // rd.Add("cdata", "taken from page source, optional");
+            // rd.Add("domain", "challenges.cloudflare.com");    // used in loading hcaptcha interface, optional
+            // rd.Add("user_agent", "your UA");                  // optional
+            // rd.Add("proxy", "12.34.56.78:1234");              // optional
+            // rd.Add("affiliate_id", "your_affiliate_id");      // get it from /account
+
+            string id = bcs.submit_turnstile(rd);
+            string solution = "";
+            while (solution == "")
+            {
+                solution = bcs.retrieve(id)["solution"];
+                Thread.Sleep(5000);
+            }
+            Console.WriteLine(string.Format("Solution: {0}", solution));
+            // bcs.set_captcha_bad(id);      // set captcha as bad
+        }
+
+        /// <summary>
         /// Task solving
         /// </summary>
         static void test_task()
@@ -289,6 +320,7 @@ namespace example
                 // test_capy();
                 // test_hcaptcha();
                 // test_funcaptcha();
+                // test_turnstile();
                 // test_task();
             }
             catch (Exception ex)

@@ -202,6 +202,23 @@ namespace bestcaptchasolver
         }
 
         /// <summary>
+        /// Submit Turnstile (Cloudflare)
+        /// </summary>
+        /// <param name="opts"></param>
+        /// <returns>captchaID</returns>
+        public string submit_turnstile(Dictionary<string, string> opts)
+        {
+            Dictionary<string, string> dict = new Dictionary<string, string>();
+            var url = string.Format("{0}/captcha/turnstile", BASE_URL);
+            opts.Add("access_token", this._access_token);
+
+            var data = JsonConvert.SerializeObject(opts);
+            var resp = Utils.POST(url, data, USER_AGENT, TIMEOUT);
+            dynamic d = JObject.Parse(resp);
+            return d.id.ToString();
+        }
+
+        /// <summary>
         /// Submit task
         /// </summary>
         /// <param name="opts"></param>
